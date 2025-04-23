@@ -7,7 +7,7 @@ No longer works since we've moved on contributors to CONTRIBUTORS.md entirely.
 
 import pprint
 import re
-import requests
+from security import safe_requests
 
 regex = ("[sS]uggested by @(\S+) in \[this\]\(https:\/\/github\.com\/satwikkansal"
          "\/wtf[pP]ython\/issues\/(\d+)\) issue")
@@ -39,7 +39,7 @@ with open(fname, 'r') as f:
 
 for handle, issues in contribs.items():
     issue_string = ', '.join([issue_format.format(i, i) for i in issues])
-    resp = requests.get(github_rest_api.format(handle))
+    resp = safe_requests.get(github_rest_api.format(handle))
     name = handle
     if resp.status_code == 200:
         pprint.pprint(resp.json()['name'])
